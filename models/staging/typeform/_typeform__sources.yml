@@ -1,0 +1,40 @@
+# dbt run-operation generate_source \
+# --args '{"database_name": "datalake", "schema_name": "typeform", "generate_columns": false}'
+
+version: 2
+
+sources:
+  - name: typeform
+    database: "{{var ('typeform_database', target.database)}}"
+    schema: "{{var ('typeform_schema', 'typeform')}}"
+
+    loader: hevo
+    loaded_at_field: to_timestamp(__hevo__loaded_at, 3)
+
+    freshness:
+      warn_after: {count: 24, period: hour}
+      error_after: {count: 48, period: hour}
+
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+
+    tables:
+      - name: workspace
+        identifier: typeform_workspaces
+
+      - name: form
+        identifier: typeform_forms
+
+      - name: formfield
+        identifier: typeform_formfields
+
+      - name: theme
+        identifier: typeform_themes
+
+      - name: answer
+        identifier: typeform_answers
+
+      - name: response
+        identifier: typeform_responses

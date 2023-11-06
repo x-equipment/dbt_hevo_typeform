@@ -1,0 +1,64 @@
+name: 'dbt_hevo_typeform'
+version: '0.0.1'
+
+config-version: 2
+
+profile: 'default'
+
+analysis-paths: ["analysis"]
+asset-paths: ["assets"]
+seed-paths: ["data"]
+log-path: "logs"
+macro-paths: ["macros"]
+model-paths: ["models"]
+packages-install-path: "modules"
+snapshot-paths: ["snapshots"]
+target-path: "target"
+test-paths: ["tests"]
+
+clean-targets:
+  - "logs"
+  - "modules"
+  - "target"
+
+query-comment: null
+
+require-dbt-version: [">=1.5.0", "<2.0.0"]
+
+quoting:
+  database: false
+  schema: false
+  identifier: false
+
+vars:
+  # project evaluator configuration
+  dbt_project_evaluator:
+    other_prefixes: ['dbt_']
+
+    primary_key_test_macros: [
+      ["dbt.test_unique", "dbt.test_not_null"],
+      ["dbt_utils.test_unique_combination_of_columns"],
+      ["dbt_constraints.test_primary_key"]
+    ]
+
+  exclude_packages: ["all"]
+
+seeds:
+  dbt_project_evaluator:
+    +schema: dbt
+    +enabled: "{{ env_var('DBT_PROJECT_EVALUATOR__ENABLED', 'true') | lower == 'false' | as_bool }}"
+
+models:
+  dbt_hevo_typeform:
+    staging:
+      +enabled: true
+      +quote_columns: true
+      +materialized: view
+
+  dbt_project_evaluator:
+    +schema: dbt
+    +enabled: "{{ env_var('DBT_PROJECT_EVALUATOR__ENABLED', 'true') | lower == 'false' | as_bool }}"
+
+tests:
+  dbt_project_evaluator:
+    +severity: "{{ env_var('DBT_PROJECT_EVALUATOR__SEVERITY', 'warn') }}"
