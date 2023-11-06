@@ -1,0 +1,46 @@
+[sqlfluff]
+dialect = snowflake
+templater = dbt
+
+exclude_rules = ST07,CV02
+
+large_file_skip_char_limit = 0
+large_file_skip_byte_limit = 0
+
+max_line_length = 120
+
+[sqlfluff:indentation]
+indent_unit = space
+tab_space_size = 2
+indented_joins = false
+indented_using_on = false
+allow_implicit_indents = true
+template_blocks_indent = false
+
+[sqlfluff:templater]
+unwrap_wrapped_queries = true
+
+[sqlfluff:templater:jinja]
+apply_dbt_builtins = true
+
+[sqlfluff:templater:dbt]
+project_dir = ./
+
+[sqlfluff:rules:capitalisation.keywords]
+capitalisation_policy = lower
+
+[sqlfluff:rules:capitalisation.identifiers]
+extended_capitalisation_policy = lower
+
+[sqlfluff:rules:capitalisation.functions]
+extended_capitalisation_policy = lower
+
+[sqlfluff:rules:capitalisation.literals]
+capitalisation_policy = lower
+
+[sqlfluff:rules:layout.select_targets]
+wildcard_policy = multiple
+
+[sqlfluff:rules:references.special_chars]
+allow_space_in_identifier = true
+additional_allowed_characters = ['.','(',')','-']
