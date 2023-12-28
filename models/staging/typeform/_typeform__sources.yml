@@ -23,15 +23,261 @@ sources:
     tables:
       - name: workspace
         identifier: typeform_workspaces
+        columns:
+          - name: default
+            type: boolean
+            tests:
+              - accepted_values:
+                  values: ['true', 'false']
+                  quote: false
+
+          - name: id
+            type: varchar
+            tests:
+              - unique
+              - not_null
+          - name: name
+            type: varchar
+
+          - name: account_id
+            type: varchar
+
+          - name: shared
+            type: boolean
+            tests:
+              - accepted_values:
+                  values: ['true', 'false']
+                  quote: false
+
+          - name: self_href
+            type: varchar
+
+          - name: forms_count
+            type: integer
+          - name: forms_href
+            type: varchar
+
+          - name: __hevo__ingested_at
+            type: integer
+          - name: __hevo__loaded_at
+            type: integer
 
       - name: form
         identifier: typeform_forms
+        columns:
+          - name: id
+            type: varchar
+            tests:
+              - unique
+              - not_null
+          - name: title
+            type: varchar
+          - name: type
+            type: varchar
+
+          - name: created_at
+            type: timestamp
+          - name: last_updated_at
+            type: timestamp
+          - name: published_at
+            type: timestamp
+
+          - name: hidden
+            type: array
+          - name: variables
+            type: array
+          - name: welcome_screens
+            type: array
+          - name: thankyou_screens
+            type: array
+          - name: logic
+            type: array
+
+          - name: theme_href
+            type: varchar
+
+          - name: workspace_href
+            type: varchar
+
+          - name: _links_display
+            type: varchar
+          - name: _links_responses
+            type: varchar
+
+          - name: settings_language
+            type: varchar
+          - name: settings_is_public
+            type: boolean
+            tests:
+              - accepted_values:
+                  values: ['true', 'false']
+                  quote: false
+          - name: settings_autosave_progress
+            type: boolean
+            tests:
+              - accepted_values:
+                  values: ['true', 'false']
+                  quote: false
+          - name: settings_progress_bar
+            type: varchar
+          - name: settings_show_progress_bar
+            type: boolean
+            tests:
+              - accepted_values:
+                  values: ['true', 'false']
+                  quote: false
+          - name: settings_show_typeform_branding
+            type: boolean
+            tests:
+              - accepted_values:
+                  values: ['true', 'false']
+                  quote: false
+          - name: settings_show_time_to_complete
+            type: boolean
+            tests:
+              - accepted_values:
+                  values: ['true', 'false']
+                  quote: false
+          - name: settings_show_number_of_submissions
+            type: boolean
+            tests:
+              - accepted_values:
+                  values: ['true', 'false']
+                  quote: false
+          - name: settings_show_cookie_consent
+            type: boolean
+            tests:
+              - accepted_values:
+                  values: ['true', 'false']
+                  quote: false
+          - name: settings_show_question_number
+            type: boolean
+            tests:
+              - accepted_values:
+                  values: ['true', 'false']
+                  quote: false
+          - name: settings_show_key_hint_on_choices
+            type: boolean
+            tests:
+              - accepted_values:
+                  values: ['true', 'false']
+                  quote: false
+          - name: settings_hide_navigation
+            type: boolean
+            tests:
+              - accepted_values:
+                  values: ['true', 'false']
+                  quote: false
+          - name: settings_capabilities
+            type: object
+          - name: settings_meta
+            type: object
+
+          - name: settings_use_lead_qualification
+            type: boolean
+            tests:
+              - accepted_values:
+                  values: ['true', 'false']
+                  quote: false
+          - name: settings_is_trial
+            type: boolean
+            tests:
+              - accepted_values:
+                  values: ['true', 'false']
+                  quote: false
+          - name: settings_pro_subdomain_enabled
+            type: boolean
+            tests:
+              - accepted_values:
+                  values: ['true', 'false']
+                  quote: false
+          - name: settings_are_uploads_public
+            type: boolean
+            tests:
+              - accepted_values:
+                  values: ['true', 'false']
+                  quote: false
+          - name: settings_free_form_navigation
+            type: boolean
+            tests:
+              - accepted_values:
+                  values: ['true', 'false']
+                  quote: false
+
+          - name: __hevo__ingested_at
+            type: integer
+          - name: __hevo__loaded_at
+            type: integer
 
       - name: formfield
         identifier: typeform_formfields
 
       - name: theme
         identifier: typeform_themes
+        columns:
+          - name: id
+            type: varchar
+            tests:
+              - unique
+              - not_null
+          - name: name
+            type: varchar
+
+          - name: created_at
+            type: timestamp
+          - name: updated_at
+            type: timestamp
+
+          - name: logo_href
+            type: varchar
+
+          - name: background_brightness
+            type: integer
+          - name: background_href
+            type: varchar
+          - name: background_layout
+            type: varchar
+
+          - name: colors_answer
+            type: varchar
+          - name: colors_background
+            type: varchar
+          - name: colors_button
+            type: varchar
+          - name: colors_button_content
+            type: varchar
+          - name: colors_question
+            type: varchar
+
+          - name: fields_alignment
+            type: varchar
+          - name: fields_font_size
+            type: varchar
+
+          - name: font
+            type: varchar
+
+          - name: has_transparent_button
+            type: boolean
+            tests:
+              - accepted_values:
+                  values: ['true', 'false']
+                  quote: false
+          - name: rounded_corners
+            type: varchar
+
+          - name: screens_alignment
+            type: varchar
+          - name: screens_font_size
+            type: varchar
+
+          - name: visibility
+            type: varchar
+
+          - name: __hevo__ingested_at
+            type: integer
+          - name: __hevo__loaded_at
+            type: integer
 
       - name: answer
         identifier: typeform_answers
