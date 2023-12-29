@@ -10,3 +10,5 @@ target/*
 !target/assets/
 target/compiled/
 target/run/
+
+package-lock.yml
