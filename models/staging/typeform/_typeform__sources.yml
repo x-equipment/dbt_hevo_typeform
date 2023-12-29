@@ -24,8 +24,9 @@ sources:
       - name: workspace
         identifier: typeform_workspaces
         columns:
-          - name: default
+          - name: DEFAULT
             type: boolean
+            quote: true
             tests:
               - accepted_values:
                   values: ['true', 'false']
@@ -211,6 +212,136 @@ sources:
 
       - name: formfield
         identifier: typeform_formfields
+        tests:
+          - dbt_utils.unique_combination_of_columns:
+              combination_of_columns:
+                - form_id
+                - id
+        columns:
+          - name: id
+            type: varchar
+            tests:
+              - not_null
+          - name: ref
+            type: varchar
+          - name: title
+            type: varchar
+          - name: type
+            type: varchar
+
+          - name: form_id
+            type: varchar
+            tests:
+              - not_null
+          - name: form_title
+            type: varchar
+          - name: form_type
+            type: varchar
+
+          - name: properties_description
+            type: varchar
+          - name: properties_choices
+            type: array
+          - name: properties_fields
+            type: array
+          - name: properties_allow_multiple_selection
+            type: boolean
+            tests:
+              - accepted_values:
+                  values: ['true', 'false']
+                  quote: false
+          - name: properties_randomize
+            type: boolean
+            tests:
+              - accepted_values:
+                  values: ['true', 'false']
+                  quote: false
+          - name: properties_allow_other_choice
+            type: boolean
+            tests:
+              - accepted_values:
+                  values: ['true', 'false']
+                  quote: false
+          - name: properties_vertical_alignment
+            type: boolean
+            tests:
+              - accepted_values:
+                  values: ['true', 'false']
+                  quote: false
+          - name: properties_supersized
+            type: boolean
+            tests:
+              - accepted_values:
+                  values: ['true', 'false']
+                  quote: false
+          - name: properties_show_labels
+            type: boolean
+            tests:
+              - accepted_values:
+                  values: ['true', 'false']
+                  quote: false
+          - name: properties_hide_marks
+            type: boolean
+            tests:
+              - accepted_values:
+                  values: ['true', 'false']
+                  quote: false
+          - name: properties_button_text
+            type: varchar
+          - name: properties_steps
+            type: integer
+          - name: properties_labels
+            type: object
+          - name: properties_start_at_one
+            type: boolean
+            tests:
+              - accepted_values:
+                  values: ['true', 'false']
+                  quote: false
+          - name: properties_structure
+            type: varchar
+          - name: properties_separator
+            type: varchar
+          - name: properties_default_country_code
+            type: varchar
+          - name: properties_show_button
+            type: boolean
+            tests:
+              - accepted_values:
+                  values: ['true', 'false']
+                  quote: false
+
+          - name: validations_required
+            type: boolean
+            tests:
+              - accepted_values:
+                  values: ['true', 'false']
+                  quote: false
+          - name: validations_min_value
+            type: integer
+          - name: validations_min_selection
+            type: integer
+          - name: validations_max_selection
+            type: integer
+
+          - name: attachment_type
+            type: varchar
+          - name: attachment_href
+            type: varchar
+          - name: attachment_properties
+            type: object
+
+          - name: layout_type
+            type: varchar
+          - name: layout_placement
+            type: varchar
+          - name: layout_attachment
+            type: object
+
+          - name: __hevo__ingested_at
+            type: integer
+          - name: __hevo__loaded_at
+            type: integer
 
       - name: theme
         identifier: typeform_themes
@@ -279,8 +410,132 @@ sources:
           - name: __hevo__loaded_at
             type: integer
 
-      - name: answer
-        identifier: typeform_answers
-
       - name: response
         identifier: typeform_responses
+        columns:
+          - name: landing_id
+            tests:
+              - unique
+              - not_null
+            type: varchar
+          - name: response_id
+            type: varchar
+          - name: token
+            type: varchar
+
+          - name: landed_at
+            type: timestamp
+          - name: submitted_at
+            type: timestamp
+
+          - name: form_id
+            type: varchar
+          - name: form_title
+            type: varchar
+          - name: form_type
+            type: varchar
+
+          - name: hidden
+            type: array
+          - name: variables
+            type: array
+
+          - name: metadata_browser
+            type: varchar
+          - name: metadata_network_id
+            type: varchar
+          - name: metadata_platform
+            type: varchar
+          - name: metadata_referer
+            type: varchar
+          - name: metadata_user_agent
+            type: varchar
+
+          - name: calculated_score
+            type: integer
+
+          - name: __hevo__ingested_at
+            type: integer
+          - name: __hevo__loaded_at
+            type: integer
+
+      - name: answer
+        identifier: typeform_answers
+        tests:
+          - dbt_utils.unique_combination_of_columns:
+              combination_of_columns:
+                - response_id
+                - form_id
+                - field_id
+        columns:
+          - name: landing_id
+            type: varchar
+          - name: response_id
+            type: varchar
+            tests:
+              - not_null
+
+          - name: landed_at
+            type: timestamp
+          - name: submitted_at
+            type: timestamp
+
+          - name: form_id
+            type: varchar
+            tests:
+              - not_null
+          - name: form_title
+            type: varchar
+          - name: form_type
+            type: varchar
+
+          - name: type
+            type: varchar
+          - name: text
+            type: varchar
+          - name: number
+            type: integer
+          - name: date
+            type: timestamp
+          - name: boolean
+            type: boolean
+            tests:
+              - accepted_values:
+                  values: ['true', 'false']
+                  quote: false
+          - name: file_url
+            type: varchar
+          - name: url
+            type: varchar
+          - name: email
+            type: varchar
+          - name: phone_number
+            type: varchar
+
+          - name: field_id
+            type: varchar
+            tests:
+              - not_null
+          - name: field_ref
+            type: varchar
+          - name: field_type
+            type: varchar
+
+          - name: choice_id
+            type: varchar
+          - name: choice_ref
+            type: varchar
+          - name: choice_label
+            type: varchar
+
+          - name: choices_ids
+            type: array
+          - name: choices_refs
+            type: array
+          - name: choices_labels
+            type: array
+
+          - name: __hevo__ingested_at
+            type: integer
+          - name: __hevo__loaded_at
+            type: integer
